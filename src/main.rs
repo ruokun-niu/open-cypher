@@ -1,6 +1,7 @@
 
 fn main() {
     use open_cypher::parser::print_pairs;
+    use open_cypher::parser::process_pairs;
     use open_cypher::parser::parse;
     // let code = "MATCH (n) WHERE n.name CONTAINS \"s\" RETURN n.name;";
     let code = "MATCH 
@@ -14,6 +15,7 @@ fn main() {
     // let code = "MATCH (n) WHERE n.name CONTAINS12 RETURN n.name;";
     match parse(code) {
         Ok(tree) => print_pairs(tree),
+        // Ok(tree) => process_pairs(tree),
         Err(err) => eprintln!("ERROR={}", err),
     }
         

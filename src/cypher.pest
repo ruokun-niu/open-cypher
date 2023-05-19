@@ -39,6 +39,8 @@ ReadingClause = {
     Match | Unwind | InQueryCall
 }
 
+// SP is blank WHITE_SPACE
+// ? makes it OPTIONAL
 Match = {
     (OPTIONAL ~ SP)? ~ MATCH ~ SP? ~ Pattern ~ (SP? ~ Where)?
 }
