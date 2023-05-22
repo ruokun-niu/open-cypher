@@ -24,12 +24,39 @@ pub fn parse_string_literal(code: &str) -> Result<Pairs<Rule>, Error<Rule>> {
 
 
 
-pub fn process_pairs(pair: Pairs<Rule>) {
+pub fn process_pairs(pairs: Pairs<Rule>) {
+    let mut query_info:HashMap<String, String> = HashMap::new();
     println!("process_pairs");
-    println!("pair={:?}", pair);
+    let p = pairs
+        .into_iter()
+        .next()
+        .expect("An error!");
+    _process_pairs(p, 0, &mut query_info);
     // println!("rule={:?},str={:?}", pair.as_rule(), pair.as_str());
 }
 
+pub fn _process_pairs(pair: Pair<Rule>, depth: usize, mut query_info: &mut HashMap<String, String>) {
+    if pair.as_rule() == Rule::whitespace {
+        return;
+    }
+
+    println!("depth={}", depth);
+    if depth == 3 {
+        let rule = pair.as_rule();
+        let ruleStr = format!("{:?}", rule);
+        query_info.insert("Query type".to_string(), ruleStr.clone());
+        println!("found rule={:?}", ruleStr);
+        std::process::exit(1);
+    }
+    let pad = " ".repeat(depth);
+    println!("{}- Rule: {:?}", pad, pair.as_rule());
+    // println!("{}- {:?} {:?}", pad, pair.as_rule(), pair.as_str());
+
+    pair
+        .into_inner()
+        .map(|p: Pair<Rule>| _process_pairs(p, depth + 1, &mut query_info))
+        .count();
+}
 pub fn print_pairs(pairs: Pairs<Rule>) {
     let p = pairs
         .into_iter()
