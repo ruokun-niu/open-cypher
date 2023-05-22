@@ -18,7 +18,6 @@ fn main() {
         // Ok(tree) => process_pairs(tree),
         Err(err) => eprintln!("ERROR={}", err),
     }
-        
     // use open_cypher::parser::parse_string_literal;
     // let text = "n.name";
     // match parse_string_literal(text) {
